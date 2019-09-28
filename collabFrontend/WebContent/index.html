@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html ng-app="myApp" ng-controller="UserController as ctrl">
+<head>
+
+   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-cookies.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.1/sockjs.js"></script>
+<title>index</title>
+</head>
+<style>
+ /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom:10;
+      border-radius:40;
+      background: transperant !important;
+     
+    }
+	body{
+	background-image:url(https://www.clipartsgram.com/image/497337261-light-color-background-images-for-website-top-hd-images-for-free-light-color-background-images-for-website-1024x683.jpg);
+background-size:150%;
+background-repeat: no-repeat;
+
+
+}
+    .dropdown{
+	
+	padding-top:30px;padding-right:10px;padding-left:10px;
+	}
+	#social:hover {
+    			-webkit-transform:scale(1.1); 
+-moz-transform:scale(1.1); 
+-o-transform:scale(1.1); 
+			}
+			#social {
+				-webkit-transform:scale(0.8);
+                /* Browser Variations: */
+-moz-transform:scale(0.8);
+-o-transform:scale(0.8); 
+-webkit-transition-duration: 0.5s; 
+-moz-transition-duration: 0.5s;
+-o-transition-duration: 0.5s;
+			}           
+/* 
+    Only Needed in Multi-Coloured Variation 
+                                               */
+			.social-fb:hover {
+				color: #3B5998;
+			}
+			.social-tw:hover {
+				color: #4099FF;
+			}
+			.social-gp:hover {
+				color: #d34836;
+			}
+			.social-em:hover {
+				color: #f39c12;
+			}
+			.nomargin { margin:0px; padding:0px;}
+
+
+
+
+
+.footer-bottom {
+
+    background-color: #15224f;
+    min-height: 30px;
+    width: 100%;
+    
+    margin-top: 10em;
+}
+.copyright {
+    color: #fff;
+    line-height: 30px;
+    min-height: 30px;
+    padding: 7px 0;
+}
+.design {
+    color: #fff;
+    line-height: 30px;
+    min-height: 30px;
+    padding: 7px 0;
+    text-align: right;
+}
+.design a {
+    /* color: #fff; */
+}
+    
+    </style>
+	<script type="text/javascript">
+
+$(document).ready(
+		function() {
+			$(".dropdown").hover(
+					function() {
+						$('.dropdown-menu', this).not('.in .dropdown-menu')
+								.stop(true, true).slideDown("400");
+						$(this).toggleClass('open');
+					},
+					function() {
+						$('.dropdown-menu', this).not('.in .dropdown-menu')
+								.stop(true, true).slideUp("400");
+						$(this).toggleClass('open');
+					});
+		});
+
+
+</script>
+    
+<body>
+
+<nav class="navbar navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+   
+     
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+	  <li><img src="https://www.freelogoservices.com/api/main/images/1j+ojl1FOMkX9WypfBe43D6kjPKBrB5PnhnEwXs1M3EMoAJtlCgljvtu8Pw7" width="100" height="100" alt="INFO CHAT">
+</li>
+      <li class="dropdown"><a style="font-family:Comic Sans MS; color:black;"  href="#/"><span class="fa fa-home">Home</span></a>
+      <li class="dropdown">
+       <a class="dropdown-toggle"  style="font-family:Comic Sans MS;color:black;"  data-toggle="dropdown"  href="#/Blog">Friend<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="#/view_friend">View Friend</a></li>
+       <li><a href="#/search_friend">Search Friend</a></li>
+<!--        <li><a href="#/request_friend">new Friend request</a></li>
+ -->      </ul>
+    </li>
+	<li class="dropdown">
+       <a class="dropdown-toggle"  style="font-family:Comic Sans MS; color:black;"   data-toggle="dropdown"  href="#">Blog<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="#/list_blog">List Blog</a></li>
+       <li><a href="#/create_blog">Create Blog</a></li>
+       <li><a href="#/view_blog">View Blog</a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+       <a class="dropdown-toggle"  style="font-family:Comic Sans MS; color:black;" data-toggle="dropdown"  href="#/Blog">Job<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li data-ng-show="currentUser.role=='ADMIN' || currentUser.role=='EMPLOYEE'"><a href="#/post_job">post Job</a></li>
+       <li><a href="#/search_job">Search Job</a>        </li>
+      </ul>
+    </li>
+    <li class="dropdown">
+       <a class="dropdown-toggle"  style="font-family:Comic Sans MS;color:black;"  data-toggle="dropdown"  href="#">Chat<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="#/chat">Chat</a></li>
+      
+      </ul>
+    </li>
+          <li class="dropdown"><a style="font-family:Comic Sans MS; color:black;"  href="#/about"><span class="">About us</span></a>
+    
+     </ul>
+    <ul class="nav navbar-nav navbar-right">
+	
+		<li ng-hide="currentUser" ng-click="" class="dropdown"><a  style="font-family:Comic Sans MS;color:black;"   href="#/login"><span class="glyphicon glyphicon-log-in" ></span> Login</a></li>
+		<li ng-show="currentUser"class="dropdown"><a  style="font-family:Comic Sans MS;color:black;" ng-click="ctrl.logout()" href="# "><span class="glyphicon glyphicon-log-in" ></span> Logout</a></li>
+	
+	</ul>
+    </div>
+  </div>
+</nav>
+   
+   
+   
+    <div ng-view></div>
+
+  <div class="footer-bottom">
+
+	<div class="container">
+
+		<div class="row">
+
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+				<div class="copyright">
+
+					© 2015, INFO CHAT, All rights reserved
+
+				</div>
+
+			</div>
+
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+				<div class="design">
+
+					<div class="social-icons">
+                                
+                                	
+                                    
+                <a href="https://www.facebook.com/bootsnipp"><i class="fa fa-facebook-square fa-3x social-fb" id="social"></i></a>
+	            <a href="https://twitter.com/bootsnipp"><i class="fa fa-twitter-square fa-3x social-tw" id="social"></i></a>
+	            <a href="https://plus.google.com/+Bootsnipp-page"><i class="fa fa-google-plus-square fa-3x social-gp" id="social"></i></a>
+	            <a href="mailto:bootsnipp@gmail.com"><i class="fa fa-envelope-square fa-3x social-em" id="social"></i></a>
+                                    
+                                  
+                                </div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div> 
+</body>
+<script src="app.js"></script>
+
+<script src="Controller_User.js"></script>
+<script src="usercontroller.js"></script>
+<script src="UserService.js"></script>
+<script src="blog/BlogController.js"></script>
+<script src="blog/BlogService.js"></script>
+<script src="friends/FriendController.js"></script>
+<script src="chat/ChatService.js"></script>
+<script src="chat/ChatController.js"></script>
+<script src="friends/FriendService.js"></script>
+<script src="job/JobController.js"></script>
+<script src="job/JobService.js"></script>
+</html>
+
+
+

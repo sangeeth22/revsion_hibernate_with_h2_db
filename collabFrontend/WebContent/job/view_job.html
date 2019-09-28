@@ -1,0 +1,24 @@
+<div class="container" ng-controller="JobController as ctrl">
+	<div class="form-group"></div>
+	<h2>Job Details</h2>
+	<p>
+		<input type="text" ng-model="surch_txt">
+	</p>
+
+	<div ng-repeat="job in ctrl.jobs | filter:surch_txt">
+		<fieldset>
+			<legend></legend>
+
+		<h3>	<p>
+				Id:{{job.jobId}}&nbsp; 
+			</p>
+
+			<p>title:{{job.jobTitle}}</p>
+			<p>Qualification :{{job.skillsRequired}}</p>
+			<p>Salary:{{job.salary}}</p>
+			<p>Location :{{job.location}}</p></h3>
+		</fieldset>
+
+	</div>
+
+</div>
